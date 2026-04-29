@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* Reset básico */
+        /* Reset de Estilos */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -23,6 +23,7 @@
             padding-bottom: 100px;
         }
 
+        /* Fundo de Partículas Interativas */
         #network-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -30,14 +31,14 @@
             opacity: 0.6;
         }
 
-        /* --- NOVO: Botão de Play Mercado Livre Style --- */
+        /* Botão de Play Superior (Estilo Mercado Livre) */
         #music-control {
             position: fixed;
             top: 25px;
             right: 25px;
             width: 48px;
             height: 48px;
-            background: #FFF159; /* Amarelo Mercado Livre */
+            background: #FFF159;
             border: none;
             border-radius: 50%;
             display: flex;
@@ -57,7 +58,7 @@
 
         #youtube-player { display: none; }
 
-        /* --- Estrutura do Conteúdo --- */
+        /* Estrutura Principal */
         .content-wrapper {
             display: flex;
             flex-direction: column;
@@ -67,6 +68,7 @@
             width: 100%;
         }
 
+        /* Cartão do Cabeçalho */
         .header-container {
             display: flex;
             align-items: center;
@@ -90,7 +92,7 @@
             border: 2px solid #334155;
         }
 
-        h1 { font-size: 1.6rem; color: #0f172a; font-weight: 700; }
+        h1 { font-size: 1.6rem; color: #0f172a; font-weight: 700; letter-spacing: -0.5px; }
 
         .tagline { 
             font-size: 0.85rem; color: #64748b; font-weight: 600;
@@ -98,7 +100,7 @@
             letter-spacing: 1.5px; text-align: center;
         }
 
-        /* --- Links Redes Sociais --- */
+        /* Links das Redes Sociais */
         .links-container { width: 100%; max-width: 400px; }
 
         .link-card {
@@ -121,30 +123,32 @@
 
         .link-card:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
-        /* --- NOVO: Rodapé Mercado Livre Premium --- */
+        /* Rodapé Mercado Livre Premium */
         .footer-ad-modern {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 450px;
-            background: #FFF159; /* Amarelo Oficial ML */
+            background: #FFF159;
             border-radius: 16px; height: 60px; 
             display: flex; align-items: center; z-index: 1000; 
             text-decoration: none; overflow: hidden;
             box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            border: 2px solid #3483fa; /* Borda Azul ML */
+            border: 2px solid #3483fa;
         }
 
         .ad-btn {
-            background: #3483fa; /* Azul Oficial ML */
+            background: #3483fa;
             color: #ffffff; font-size: 10px; 
             font-weight: 800; padding: 0 20px; height: 100%; 
             display: flex; align-items: center; text-transform: uppercase;
             letter-spacing: 1px;
         }
 
+        .marquee-wrapper { flex: 1; overflow: hidden; }
+
         .marquee-content {
             display: inline-block; white-space: nowrap;
             animation: marquee-modern 25s linear infinite;
-            color: #333; /* Texto escuro para ler bem no amarelo */
+            color: #333;
             font-size: 13px;
             font-weight: 600;
         }
@@ -160,11 +164,12 @@
     </div>
 
     <div id="youtube-player"></div>
+
     <canvas id="network-canvas"></canvas>
 
     <div class="content-wrapper">
         <div class="header-container">
-            <img src="https://i.ibb.co/RG3hC6n7/1759764626350.png" alt="Logo" class="profile-img">
+            <img src="https://i.ibb.co/RG3hC6n7/1759764626350.png" alt="Profile" class="profile-img">
             <h1>@A.Niel</h1>
         </div>
         
@@ -185,7 +190,7 @@
 
     <a href="https://meli.la/2JYVynt" target="_blank" class="footer-ad-modern">
         <div class="ad-btn">VER OFERTAS <i class="fas fa-shopping-cart" style="margin-left: 8px;"></i></div>
-        <div class="marquee-wrapper" style="flex: 1; overflow: hidden;">
+        <div class="marquee-wrapper">
             <div class="marquee-content">
                 <span>🔥 OFERTAS IMPERDÍVEIS NO MERCADO LIVRE! 🔥</span>
                 <span>⚡ PRODUTOS PARA ELEVAR O SEU SHAPE COM PREÇO JUSTO! ⚡</span>
@@ -197,6 +202,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
+        // Gerenciamento da Playlist
         let player;
         let isPlaying = false;
         function onYouTubeIframeAPIReady() {
@@ -216,12 +222,13 @@
             }
         }
 
-        // Script de Partículas
+        // Configuração Visual das Partículas
         const canvas = document.getElementById('network-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         let atoms = [];
+
         class Atom {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -235,8 +242,12 @@
                 if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
                 if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
             }
-            draw() { ctx.fillStyle = '#94a3b8'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+            draw() {
+                ctx.fillStyle = '#94a3b8';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
         }
+
         function init() { for (let i = 0; i < 50; i++) atoms.push(new Atom()); }
         function connect() {
             for (let a = 0; a < atoms.length; a++) {
